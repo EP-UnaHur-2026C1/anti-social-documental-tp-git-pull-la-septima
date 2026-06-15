@@ -2,13 +2,15 @@ const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
 const PORT = process.env.PORT || 3001;
+const  connectDB  = require('./config/db');
+
+dotenv.config();
+connectDB();
 
 app.use(express.json());
 
-app.listen(PORT, async (err)=> {
-    if(err) {
-        console.error(err.message)
-        process.exit(1)
-    }
-    console.log(`App iniciada en el puerto ${PORT}`)
-})
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+  });
+});
