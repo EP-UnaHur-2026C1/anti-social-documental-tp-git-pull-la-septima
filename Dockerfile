@@ -1,4 +1,4 @@
-FROM node:20.10.0-alpine 
+FROM node:22-alpine
 #Imagen con la que quiero trabajar
 
 WORKDIR /app
