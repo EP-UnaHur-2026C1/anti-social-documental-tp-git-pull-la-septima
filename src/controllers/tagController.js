@@ -55,10 +55,27 @@ const deleteTag = async (req, res) => {
     }
 };
 
+const updateTag = async (req, res) => {
+    try {
+        const tag = await Tag.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+        if (!tag) {
+            return res.status(404).json({ message: 'Tag no encontrado' });
+        }
+        res.status(200).json(tag);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     createTag,
     deleteTag,
     getTags,
     getTagById,
-    deleteTag
+    deleteTag,
+    updateTag
 }
