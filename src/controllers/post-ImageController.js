@@ -45,10 +45,26 @@ const deletePostImage = async (req, res) => {
     }
 };
 
+const updatePostImage = async (req, res) => {
+    try {
+        const postImage = await PostImage.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        ); 
+        if (!postImage) {
+            return res.status(404).json({ message: 'Imagen de post no encontrada' });
+        }
+        res.status(200).json(postImage);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }   
+}
 
 module.exports = {
     createPostImage,
     getPostImageByPostId,
     getPostImages,
-    deletePostImage
+    deletePostImage,
+    updatePostImage
 }
