@@ -17,12 +17,22 @@ const createComment = async (req, res) => {
   }
 };
 
+const getCommentsByPost = async (req, res) => {
+    try {
+        const { id_post } = req.params;
+        const comments = await Comment.find({ post: id_post, visible: true });
+        res.status(200).json(comments);
+    } catch (err) {
+        res.status(500).json({ message: `${err}` });
+    }
+};
+
 const updateComment = async (req, res) => {
   try {
     const { texto } = req.body;
     const comment = await Comment.findByIdAndUpdate(req.params.id, { texto }, { new: true });
     res.status(200).json({ message: `El Comentario : ${comment.texto} actualizado` });
-    
+
   } catch (err) {
     res.status(500).json({ message: `${err}` });
   }
@@ -31,5 +41,5 @@ const updateComment = async (req, res) => {
 
 
 module.exports = {
-  createComment, updateComment
+  createComment, updateComment, getCommentsByPost
 };
