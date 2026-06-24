@@ -1,17 +1,15 @@
 const mongoose = require('mongoose');
 
-const validateObjectId = (Model) => {
+const validateObjectId = (Model, paramName = 'id') => {
     return async (req, res, next) => {
         try {
-            const { id } = req.params;
+            const id = req.params[paramName];
             if (!mongoose.isValidObjectId(id)) {
-                res.status(400).json({ message: 'El id no es un ObjectId válido' });
-                return;
+                return res.status(400).json({ message: `El ${paramName} no es un ObjectId válido` });
             }
             const instance = await Model.findById(id);
             if (!instance) {
-                res.status(404).json({ message: `El id ${id} no fue encontrado` });
-                return;
+                return res.status(404).json({ message: `El ${paramName} ${id} no fue encontrado` });
             }
             next();
         } catch (err) {
@@ -25,8 +23,7 @@ const validateSchema = (Schema) => {
         const { error } = Schema.validate(req.body, { abortEarly: false });
         if (error) {
             const errorMsj = error.details.map(e => e.message);
-            res.status(400).json(errorMsj);
-            return
+            return res.status(400).json(errorMsj);
         }
         next();
     };
