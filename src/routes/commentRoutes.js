@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const {
     createComment,
+    getAllComments,
     getCommentsByPost,
     updateComment,
     deleteComment,
@@ -16,6 +17,7 @@ const {
 const router = Router();
 
 router.post('/user/:id_user/post/:id_post', validateSchemaComment, validateCommentUserId, validateCommentPostId, createComment);
+router.get('/', getAllComments);
 router.get('/post/:id_post', validateCommentPostId, getCommentsByPost);
 router.put('/update/:id', validateSchemaComment, validateCommentId, updateComment);
 router.delete('/delete/:id', validateCommentId, deleteComment);

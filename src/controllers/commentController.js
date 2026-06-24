@@ -62,6 +62,15 @@ const updateVisibilityByMonth = async (req, res) => {
     }
 };
 
+const getAllComments = async (req, res) => {
+    try {
+        const comments = await Comment.find();
+        res.status(200).json(comments);
+    } catch (err) {
+        res.status(500).json({ message: `${err}` });
+    }
+};
+
 module.exports = {
-  createComment, updateComment, getCommentsByPost, deleteComment, updateVisibilityByMonth
+  createComment, updateComment, getCommentsByPost, deleteComment, updateVisibilityByMonth, getAllComments
 };
