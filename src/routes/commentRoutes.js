@@ -3,7 +3,8 @@ const {
     createComment,
     getCommentsByPost,
     updateComment,
-    deleteComment
+    deleteComment,
+    updateVisibilityByMonth
 } = require('../controllers/commentController');
 const {
     validateCommentId,
@@ -18,5 +19,6 @@ router.post('/user/:id_user/post/:id_post', validateSchemaComment, validateComme
 router.get('/post/:id_post', validateCommentPostId, getCommentsByPost);
 router.put('/update/:id', validateSchemaComment, validateCommentId, updateComment);
 router.delete('/delete/:id', validateCommentId, deleteComment);
+router.patch('/updateVisibility', validateSchemaUpdateVisibility, updateVisibilityByMonth);
 
 module.exports = router;

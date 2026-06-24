@@ -47,7 +47,21 @@ const deleteComment = async (req, res) => {
     }
 };
 
+const updateVisibilityByMonth = async (req, res) => {
+    try {
+        const { mes } = req.body;
+        const comments = await Comment.find();
+        const promise = comments.map(async (comment) => {
+            const visible = mes > comment.antiguedadMes;
+            return Comment.findByIdAndUpdate(comment._id, { visible });
+        });
+        await Promise.all(promise);
+        res.status(200).json({ message: 'Comentarios actualizados' });
+    } catch (err) {
+        res.status(500).json({ message: `${err}` });
+    }
+};
 
 module.exports = {
-  createComment, updateComment, getCommentsByPost, deleteComment
+  createComment, updateComment, getCommentsByPost, deleteComment, updateVisibilityByMonth
 };
