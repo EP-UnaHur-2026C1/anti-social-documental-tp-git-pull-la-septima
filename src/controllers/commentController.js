@@ -36,10 +36,18 @@ const updateComment = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: `${err}` });
   }
-}
+};
 
+const deleteComment = async (req, res) => {
+    try {
+        const comment = await Comment.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: `El Comentario : ${comment.texto} eliminado` });
+    } catch (err) {
+        res.status(500).json({ message: `${err}` });
+    }
+};
 
 
 module.exports = {
-  createComment, updateComment, getCommentsByPost
+  createComment, updateComment, getCommentsByPost, deleteComment
 };
