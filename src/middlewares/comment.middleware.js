@@ -2,7 +2,7 @@ const { validateObjectId, validateSchema } = require('./generic.middleware');
 const Comment = require('../models/Comment');
 const User = require('../models/User');
 const Post = require('../models/Post');
-const { commentSchema, updateVisibilitySchema } = require('../schemas/comment.schema');
+const { commentSchema, updateVisibilitySchema } = require('../schemas/commentSchema');
 
 const validateCommentId = validateObjectId(Comment);
 const validateSchemaComment = validateSchema(commentSchema);
