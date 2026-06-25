@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const { createTag, deleteTag, getTags, getTagById, deleteTag, updateTag } = require('../controllers/tagController');
+const { createTag, deleteTag, getTags, getTagById, updateTag } = require('../controllers/tagController');
 const { validateTagId, validateSchemaTag } = require('../middlewares/tag.middleware');
 
 const router = Router();
