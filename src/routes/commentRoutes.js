@@ -13,7 +13,8 @@ const {
     validateSchemaComment,
     validateSchemaUpdateVisibility,
     validateCommentUserId,
-    validateCommentPostId
+    validateCommentPostId,
+    validateCommentOwnership
 } = require('../middlewares/comment.middleware');
 const router = Router();
 
@@ -21,8 +22,21 @@ router.post('/user/:id_user/post/:id_post', validateSchemaComment, validateComme
 router.get('/', getAllComments);
 router.get('/post/:id_post', validateCommentPostId, getCommentsByPost);
 router.get('/:id', validateCommentId, getCommentById);
-router.put('/update/:id', validateSchemaComment, validateCommentId, updateComment);
-router.delete('/delete/:id', validateCommentId, deleteComment);
+router.put(
+    '/user/:id_user/post/:id_post/:id',
+    validateCommentUserId,
+    validateCommentPostId,
+    validateCommentOwnership,
+    validateSchemaComment,
+    updateComment
+);
+router.delete(
+    '/user/:id_user/post/:id_post/:id',
+    validateCommentUserId,
+    validateCommentPostId,
+    validateCommentOwnership,
+    deleteComment
+);
 router.patch('/updateVisibility', validateSchemaUpdateVisibility, updateVisibilityByMonth);
 
 module.exports = router;
