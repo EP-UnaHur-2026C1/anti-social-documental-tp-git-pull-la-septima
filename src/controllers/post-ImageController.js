@@ -2,7 +2,8 @@ const PostImage = require("../models/Post-Image")
 
 const createPostImage = async (req, res) => {
     try {
-        const { url_image, id_post } = req.body;
+        const { id_post } = req.params;
+        const { url_image } = req.body
         const postImage = await PostImage.create({ url_image, id_post });
         res.status(201).json(postImage);
     } catch (error) {
@@ -10,31 +11,30 @@ const createPostImage = async (req, res) => {
     }
 };
 
-const getPostImageByPostId = async (req, res) => {
+const getPostImages = async (req, res) => {
     try {
-        const { id_post } = req.params; 
-        const postImages = await PostImage.findById({ where: { id_post } });
-        if(!postImages) {
-            return res.status(404).json({ message: `No se encontraron imágenes para el post con id ${id_post}` });
-        }
-        res.status(200).json(postImages);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
+        const { id_post } = req.params;
+        const images = await PostImage.find({ id_post });
+        res.status(200).json(images);
+    } catch (err) {
+        res.status(500).json({ message: `${err}` });
     }
 };
 
-const getPostImages = async (req, res) => { 
-    try{
-        const postImages = await PostImage.find();
-        res.status(200).json(postImages);   
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+const getPostImageById = async (req, res) => {
+    try {
+        const { id_post, id_pi } = req.params;
+        const image = await PostImage.findOne({ _id: id_pi, id_post });
+        res.status(200).json(image);
+    } catch (err) {
+        res.status(500).json({ message: `${err}` });
     }
-}
+};
 
 const deletePostImage = async (req, res) => {
     try {
-        const postImage = await PostImage.findByIdAndDelete(req.params.id);
+        const { id_pi } = req.params;
+        const postImage = await PostImage.findByIdAndDelete(id_pi);
         if (!postImage) {
             return res.status(404).json({ message: 'Imagen de post no encontrada' });
         }
@@ -47,9 +47,11 @@ const deletePostImage = async (req, res) => {
 
 const updatePostImage = async (req, res) => {
     try {
-        const postImage = await PostImage.findByIdAndUpdate(
-            req.params.id,
-            req.body,
+        const { id_post, id_pi } = req.params;
+        const { url_image } = req.body;
+        const postImage = await PostImage.findOneAndUpdate(
+            { _id: id_pi, id_post },
+            { url_image },
             { new: true }
         ); 
         if (!postImage) {
@@ -63,7 +65,7 @@ const updatePostImage = async (req, res) => {
 
 module.exports = {
     createPostImage,
-    getPostImageByPostId,
+    getPostImageById,
     getPostImages,
     deletePostImage,
     updatePostImage

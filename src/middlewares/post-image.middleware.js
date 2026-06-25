@@ -1,6 +1,6 @@
 const { validateObjectId, validateSchema } = require('./generic.middleware');
 const PostImage = require('../models/Post-Image');
-const { postImageSchema } = require('../schemas/post-image.schema');
+const { postImageSchema } = require('../schemas/post-imageSchema');
 
 const validatePostImageId = validateObjectId(PostImage, 'id_pi');
 const validateSchemaPostImage = validateSchema(postImageSchema);
