@@ -12,7 +12,7 @@ const createComment = async (req, res) => {
         });
     res.status(201).json({ message: 'El comentario fue agregado correctamente' });
 
-  } catch (error) {
+  } catch (err) {
     res.status(500).json({ message: `${err}` });
   }
 };
