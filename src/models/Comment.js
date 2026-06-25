@@ -14,11 +14,29 @@ const commentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Post',
     required: true
-  }
+  },
+  visible: {
+  type: Boolean,
+  default: true
+}
 }, { 
   // timestamps agrega automáticamente createdAt y updatedAt a cada documento
-  timestamps: true 
+  timestamps: true ,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 });
+
+commentSchema.virtual('antiguedadMes').get(function() {
+  if (!this.createdAt) return 0;
+  const now = new Date();
+  const created = new Date(this.createdAt);
+  let months = (now.getFullYear() - created.getFullYear()) * 12 + (now.getMonth() - created.getMonth());
+  if (now.getDate() < created.getDate()) {
+    months--;
+  }
+  return months < 0 ? 0 : months;
+});
+
 
 const Comment = mongoose.model('Comment', commentSchema);
 
