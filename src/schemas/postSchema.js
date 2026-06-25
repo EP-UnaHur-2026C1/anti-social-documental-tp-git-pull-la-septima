@@ -2,11 +2,11 @@ const Joi = require('joi');
 
 const postSchema = Joi.object({
     texto: Joi.string()
-        .max(225)
+        .max(255)
         .required()
         .messages({
             'string.empty': 'El texto no puede ser vacio',
-            'string.max': 'El texto no puede superar los 225 caracteres',
+            'string.max': 'El texto no puede superar los 255 caracteres',
             'any.required': 'El texto es obligatorio'
         }),
     tags: Joi.array()

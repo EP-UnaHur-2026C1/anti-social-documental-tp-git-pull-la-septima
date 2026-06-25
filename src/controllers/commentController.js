@@ -11,7 +11,6 @@ const createComment = async (req, res) => {
             visible: true
         });
     res.status(201).json({ message: 'El comentario fue agregado correctamente' });
-
   } catch (err) {
     res.status(500).json({ message: `${err}` });
   }
@@ -22,7 +21,7 @@ const getCommentsByPost = async (req, res) => {
         const { id_post } = req.params;
         const limitMonths = parseInt(process.env.COMMENT_VISIBILITY_MONTHS) || 6;
         const comments = await Comment.find({ post: id_post, visible: true });
-         const filteredComments = comments.filter(comment => comment.antiguedadMes < limitMonths);
+        const filteredComments = comments.filter(comment => comment.antiguedadMes < limitMonths);
         res.status(200).json(filteredComments);
     } catch (err) {
         res.status(500).json({ message: `${err}` });

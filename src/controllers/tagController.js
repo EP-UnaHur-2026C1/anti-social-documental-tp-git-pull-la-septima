@@ -12,9 +12,6 @@ const createTag = async (req, res) => {
 const deleteTag = async (req, res) => {
     try {
         const tag = await Tag.findByIdAndDelete(req.params.id);
-        if (!tag) {
-            return res.status(404).json({ message: 'Tag no encontrado' });
-        }
         res.status(200).json({ message: 'Tag eliminado' });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -33,10 +30,7 @@ const getTags = async (req, res) => {
 const getTagById = async (req, res) => {
     try {
         const id = req.params.id;
-        const tag = await Tag.findById(id)
-        if (!tag) {
-            res.status(404).json({message : `No se encontro un tag con id ${id}`})
-        }
+        const tag = await Tag.findById(id);
         res.status(200).json(tag);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -50,9 +44,6 @@ const updateTag = async (req, res) => {
             req.body,
             { new: true }
         );
-        if (!tag) {
-            return res.status(404).json({ message: 'Tag no encontrado' });
-        }
         res.status(200).json(tag);
     } catch (error) {
         res.status(500).json({ message: error.message });

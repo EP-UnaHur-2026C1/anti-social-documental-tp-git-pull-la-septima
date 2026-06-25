@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
+dotenv.config();
 const PORT = process.env.PORT || 3001;
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
@@ -8,8 +9,6 @@ const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const tagRoutes = require('./routes/tagRoutes');
 const postImageRoutes = require('./routes/post-ImageRoutes');
-
-dotenv.config();
 
 app.use(express.json());
 

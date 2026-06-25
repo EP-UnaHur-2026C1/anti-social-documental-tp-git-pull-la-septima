@@ -17,7 +17,7 @@ const { validateUserId } = require('../middlewares/user.middleware');
 
 const router = Router();
 
-router.post('/:id', validateSchemaPost, validateUserId, validatePostTagsExist, createPost);
+router.post('/user/:id', validateSchemaPost, validateUserId, validatePostTagsExist, createPost);
 router.delete('/:id_post', validatePostId, deletePost);
 router.get('/', getPosts);
 router.get('/user/:id', validateUserId, getAllPostsByUser);

@@ -15,7 +15,7 @@ const createPost = async (req, res) => {
             .populate('tags');
         res.status(201).json(resultado);
     } catch (err) {
-        res.status(500).json({ message: `${err}` });
+        res.status(500).json({ message: `${err.message}` });
     }
 };
 
@@ -24,7 +24,7 @@ const deletePost = async (req, res) => {
         await Post.findByIdAndDelete(req.params.id_post);
         res.status(200).json({ message: 'Post eliminado correctamente' });
     } catch (err) {
-        res.status(500).json({ message: `${err}` });
+        res.status(500).json({ message: `${err.message}` });
     }
 };
 
@@ -33,7 +33,7 @@ const getPosts = async (_, res) => {
         const posts = await Post.find().populate('user').populate('tags');
         res.status(200).json(posts);
     } catch (err) {
-        res.status(500).json({ message: `${err}` });
+        res.status(500).json({ message: `${err.message}` });
     }
 };
 
@@ -44,7 +44,7 @@ const getAllPostsByUser = async (req, res) => {
             .populate('tags');
         res.status(200).json(posts);
     } catch (err) {
-        res.status(500).json({ message: `${err}` });
+        res.status(500).json({ message: `${err.message}` });
     }
 };
 
@@ -56,7 +56,7 @@ const getOnePostByUser = async (req, res) => {
         }).populate('user').populate('tags');
         res.status(200).json(post);
     } catch (err) {
-        res.status(500).json({ message: `${err}` });
+        res.status(500).json({ message: err.message });
     }
 };
 
@@ -72,7 +72,7 @@ const updatePostByUser = async (req, res) => {
         ).populate('user').populate('tags');
         res.status(200).json(post);
     } catch (err) {
-        res.status(500).json({ message: `${err}` });
+        res.status(500).json({ message: err.message });
     }
 };
 
