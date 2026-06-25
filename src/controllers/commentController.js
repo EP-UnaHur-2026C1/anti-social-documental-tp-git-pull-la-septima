@@ -20,8 +20,10 @@ const createComment = async (req, res) => {
 const getCommentsByPost = async (req, res) => {
     try {
         const { id_post } = req.params;
+        const limitMonths = parseInt(process.env.COMMENT_VISIBILITY_MONTHS) || 6;
         const comments = await Comment.find({ post: id_post, visible: true });
-        res.status(200).json(comments);
+         const filteredComments = comments.filter(comment => comment.antiguedadMes < limitMonths);
+        res.status(200).json(filteredComments);
     } catch (err) {
         res.status(500).json({ message: `${err}` });
     }
